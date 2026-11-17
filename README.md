@@ -1,72 +1,73 @@
-# MiMacro 调起器
+# MiMacro Launcher
 
-小米系统应用 MiMacro（`com.xiaomi.macro`）的外部调起器。
+An external launcher for Xiaomi's system app MiMacro (`com.xiaomi.macro`).
 
-## 这是什么
+## What is this
 
-MiMacro 是小米的游戏宏应用，但它没有任何 Activity、没有桌面入口，
-平时只能由游戏加速器调起。在不支持的机型上（例如 REDMI K80 Pro），
-游戏加速器里根本不显示宏的入口。
+MiMacro is Xiaomi's game macro app, but it has no Activity and no launcher
+entry — it can only be launched by the game booster. On unsupported models,
+the game booster doesn't show the macro entry at all.
 
-这个小应用就是来绕过这个限制的：它直接向 MiMacro 的 `MainService`
-发送和游戏加速器一样的显式 Intent，把宏界面调起来。
+This small app works around that limitation: it sends the same explicit
+Intent to MiMacro's `MainService` that the game booster does, bringing up
+the macro UI.
 
-## 功能
+## Features
 
-- **打开游戏并启动服务**：先打开填好的游戏，再启动 MiMacro 服务
-- **只启动 MiMacro 服务**：不打开游戏，单独调起
-- **填入王者荣耀包名**：一键填入 `com.tencent.tmgp.sgame`
-- **横屏模式**：强制启动器横屏（横屏游戏建议先开横屏再点启动），选择会记住
-- **悬浮窗调起**（可开关）：游戏里常驻一个可拖动的“宏”小浮窗，
-  点一下启动宏，长按停止
-- **停止服务**、**给 MiMacro 开悬浮窗权限**、**重新检测安装状态**
+- **Open game and start service**: opens the configured game first, then
+  starts the MiMacro service
+- **Start MiMacro service only**: launches the service without opening a game
+- **Fill in Honor of Kings package name**: one-tap fill of
+  `com.tencent.tmgp.sgame`
+- **Landscape mode**: forces the launcher into landscape (for landscape
+  games, turn on landscape mode first, then start); the choice is remembered
+- **Floating window launcher** (toggleable): a draggable floating button
+  stays on top of the game; tap it to start the macro, long-press to stop
+- **Stop service**, **open overlay permission for MiMacro**,
+  **re-check install status**
 
-## 使用方法
+## Usage
 
-1. 手机上先装好 MiMacro（`com.xiaomi.macro`，版本 2.2.7.S 可用）
-2. 安装本调起器（Releases 里下载 APK，或自己编译）
-3. 填入游戏包名，点“打开游戏并启动服务”
-4. 第一次用先点“给 MiMacro 开悬浮窗权限”把权限开好
+1. Install MiMacro (`com.xiaomi.macro`, version 2.2.7.S works) on the phone
+   first
+2. Install this launcher (download the APK from Releases, or build it
+   yourself)
+3. Enter the game package name and tap "Open game and start service"
+4. On first use, tap "Open overlay permission for MiMacro" to grant the
+   permission
 
-## 注意事项（两道坎）
+## Build
 
-点启动后如果 MiMacro 界面没出现，说明这台手机的
-`support_mi_game_macro` 开关是关的，服务自检跳过了。
-这个开关写在系统分区里，调起器改不了。
+### Manual build (recommended, no dependency downloads needed)
 
-即使界面出来，宏的点击注入依赖肩键服务，非肩键机型可能点不出去。
-这是机型限制，不是调起器的问题。
-
-## 编译
-
-### 手动编译（推荐，不需要联网下载依赖）
-
-需要 JDK 21 和 Android SDK（platform-35、build-tools 35.0.0）：
+Requires JDK 21 and Android SDK (platform-35, build-tools 35.0.0):
 
 ```sh
-export JAVA_HOME=<你的 JDK 21 目录>
-export ANDROID_HOME=<你的 Android SDK 目录>
+export JAVA_HOME=<your JDK 21 directory>
+export ANDROID_HOME=<your Android SDK directory>
 ./build-manual.sh
 ```
 
-产物在 `build/mimacro-launcher-debug.apk`（debug 签名，可直接安装）。
+Output: `build/mimacro-launcher-debug.apk` (debug-signed, installable
+directly).
 
-### Gradle 编译
+### Gradle build
 
 ```sh
 ./build.sh
 ```
 
-需要联网下载 AGP 8.13.2 及依赖。
+Requires network access to download AGP 8.13.2 and dependencies.
 
-## 版本历史
+## Version history
 
-- v1.3.0：新增横屏模式开关、可开关的悬浮窗调起
-- v1.2.0：改顺序为先打开游戏、再启动宏服务
-- v1.1.0：新增打开游戏功能、王者荣耀包名快捷填入
-- v1.0.0：首版，启动 / 停止 MiMacro 服务
+- v1.3.0: landscape mode toggle, toggleable floating window launcher
+- v1.2.0: open the game first, then start the macro service
+- v1.1.0: open game feature, Honor of Kings package shortcut
+- v1.0.0: initial release, start / stop the MiMacro service
 
-## 声明
+## Disclaimer
 
-非官方工具，与小米无关。MiMacro 是小米的系统应用，本项目只做外部调起，
-不修改、不重打包 MiMacro 本身。
+Unofficial tool, not affiliated with Xiaomi. MiMacro is Xiaomi's system app;
+this project only launches it from outside and does not modify or repackage
+MiMacro itself.
