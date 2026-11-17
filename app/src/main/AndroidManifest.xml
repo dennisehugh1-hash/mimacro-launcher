@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.hugs.mimacrolauncher"
+    android:versionCode="4"
+    android:versionName="1.3.0">
+
+    <uses-sdk android:minSdkVersion="26" android:targetSdkVersion="33" />
+
+    <!-- 调起 MainService 所需的权限（普通级别，安装时自动授予） -->
+    <uses-permission android:name="com.xiaomi.macro.permission" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <!-- 悬浮窗调起：本应用自己的悬浮窗权限 -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
+    <!-- 允许查询 MiMacro 是否安装，以及查询所有带桌面入口的应用（用来打开游戏） -->
+    <queries>
+        <package android:name="com.xiaomi.macro" />
+        <intent>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent>
+    </queries>
+
+    <application
+        android:label="MiMacro调起器"
+        android:theme="@android:style/Theme.Material.Light.NoActionBar">
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <service
+            android:name=".FloatingService"
+            android:exported="false" />
+    </application>
+
+</manifest>
